@@ -11,7 +11,9 @@ const Search = () => {
 
   const searchGarments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/search?q=${term}`)
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/search?q=${term}`
+      )
       setGarments(response.data)
       setError("")
       setIsEmpty(response.data.length === 0)
