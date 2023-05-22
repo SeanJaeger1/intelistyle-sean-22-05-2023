@@ -7,14 +7,17 @@ const Search = () => {
   const [term, setTerm] = useState("")
   const [garments, setGarments] = useState([])
   const [error, setError] = useState("")
+  const [isEmpty, setIsEmpty] = useState(false)
 
   const searchGarments = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/search?q=${term}`)
       setGarments(response.data)
       setError("")
+      setIsEmpty(response.data.length === 0)
     } catch (err) {
       setError("An error occurred while searching. Please try again.")
+      setIsEmpty(false)
     }
   }
 
@@ -44,6 +47,7 @@ const Search = () => {
         Search
       </Button>
       {error && <p>{error}</p>}
+      {isEmpty && <p>No garments found for your search.</p>}
       <GarmentList garments={garments} />
     </Box>
   )
